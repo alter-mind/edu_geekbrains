@@ -1,0 +1,41 @@
+Last login: Thu Mar 12 14:54:35 2020 from 192.168.88.239
+vmub@ubvm:~$ whoami
+vmub
+vmub@ubvm:~$ htop
+vmub@ubvm:~$ cd ~
+vmub@ubvm:~$ mkdir first
+vmub@ubvm:~$ mkdir second
+vmub@ubvm:~$ ls
+first  second
+vmub@ubvm:~$ cd first
+vmub@ubvm:~/first$ echo 'print("1")' >> first.py
+vmub@ubvm:~/first$ cd ..
+vmub@ubvm:~$ cd second/
+vmub@ubvm:~/second$ echo 'print("2")' >> second.py
+vmub@ubvm:~/second$ pwd
+/home/vmub/second
+vmub@ubvm:~/second$ mv second.py /home/vmub/first/
+vmub@ubvm:~/second$ ls
+vmub@ubvm:~/second$ cd ..
+vmub@ubvm:~$ ls
+first  second
+vmub@ubvm:~$ cd second/
+vmub@ubvm:~/second$ ls
+vmub@ubvm:~/second$ cd ..
+vmub@ubvm:~$ ls
+first  second
+vmub@ubvm:~$ d first/
+d: command not found
+vmub@ubvm:~$ cd first/
+vmub@ubvm:~/first$ ls
+first.py  second.py
+vmub@ubvm:~/first$ cd ..
+vmub@ubvm:~$ rm -rf second/
+vmub@ubvm:~$ ls
+first
+vmub@ubvm:~$ cd first 
+vmub@ubvm:~/first$ cat first.py 
+print("1")
+vmub@ubvm:~/first$ cat second.py 
+print("2")
+
