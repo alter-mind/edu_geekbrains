@@ -114,7 +114,7 @@ CREATE TABLE likes(
 	id SERIAL,
 	user_id BIGINT UNSIGNED NOT NULL,
 	media_id BIGINT UNSIGNED NOT NULL,
-	created_at DATETIME DEFAULT NOW()
+	created_at DATETIME DEFAULT NOW(),
 	
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (media_id) REFERENCES media(id)
