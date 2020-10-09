@@ -60,8 +60,8 @@ CREATE TABLE friend_requests(
 	
 	PRIMARY KEY (initiator_user_id, target_user_id),
 	FOREIGN KEY (initiator_user_id) REFERENCES users(id),
-	FOREIGN KEY (target_user_id) REFERENCES users(id),
-	CHECK (initiator_user_id != target_user_id)
+	FOREIGN KEY (target_user_id) REFERENCES users(id)
+	-- CHECK (initiator_user_id != target_user_id)
 );
 
 DROP TABLE IF EXISTS communities;
@@ -90,7 +90,7 @@ CREATE TABLE media_types(
 	id SERIAL,
 	name VARCHAR(255), -- 'text', 'video', 'music', 'image'
 	created_at DATETIME DEFAULT NOW(),
-	updated_at DATETIME ON UPDATE NOW(),
+	updated_at DATETIME ON UPDATE NOW()
 );
 
 DROP TABLE IF EXISTS media;
