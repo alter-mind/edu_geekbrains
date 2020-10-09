@@ -12,6 +12,7 @@ CREATE TABLE users(
 	firstname VARCHAR(100),
 	lastname VARCHAR(100),
 	email VARCHAR(100) UNIQUE,
+	password_hash VARCHAR(100),
 	phone BIGINT UNSIGNED UNIQUE,
 	
 	INDEX user_name_idx (firstname, lastname)
@@ -22,19 +23,17 @@ DROP TABLE IF EXISTS profiles;
 CREATE TABLE profiles(
 	user_id BIGINT UNSIGNED NOT NULL UNIQUE,
 	gender CHAR(1),
+	birthday DATE,
+	photo_id BIGINT UNSIGNED NULL,
 	hometown VARCHAR(100),
 	created_at DATETIME DEFAULT NOW()
 );
 
 ALTER TABLE profiles ADD CONSTRAINT fk_profiles_user_id
 FOREIGN KEY (user_id) REFERENCES users(id)
-ON UPDATE CASCADE
-ON DELETE RESTRICT
+ON UPDATE CASCADE  -- значение по умолчанию
+ON DELETE RESTRICT -- значение по умолчанию
 ;
-
-ALTER TABLE profiles ADD COLUMN birthday DATE;
--- ALTER TABLE profiles RENAME COLUMN birthday TO date_of_birth;
--- ALTER TABLE profiles DROP COLUMN date_of_birth;
 
 -- 1 to M
 DROP TABLE IF EXISTS messages;
@@ -89,7 +88,9 @@ CREATE TABLE users_communities(
 DROP TABLE IF EXISTS media_types;
 CREATE TABLE media_types(
 	id SERIAL,
-	name VARCHAR(255) -- 'text', 'video', 'music', 'image'
+	name VARCHAR(255), -- 'text', 'video', 'music', 'image'
+	created_at DATETIME DEFAULT NOW(),
+	updated_at DATETIME ON UPDATE NOW(),
 );
 
 DROP TABLE IF EXISTS media;
@@ -103,7 +104,7 @@ CREATE TABLE media(
 	filename VARCHAR(255),
 	metadata JSON,
 	created_at DATETIME DEFAULT NOW(),
-	updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+	updated_at DATETIME ON UPDATE NOW(),
 	
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (media_type_id) REFERENCES media_types(id)
@@ -126,7 +127,8 @@ CREATE TABLE photo_albums(
 	name VARCHAR(255) DEFAULT NULL,
 	user_id BIGINT UNSIGNED DEFAULT NULL,
 	
-	FOREIGN KEY (user_id) REFERENCES users(id)
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS photos;
@@ -138,18 +140,3 @@ CREATE TABLE photos(
 	FOREIGN KEY (album_id) REFERENCES photo_albums(id),
 	FOREIGN KEY (media_id) REFERENCES media(id)
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
