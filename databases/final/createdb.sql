@@ -8,7 +8,7 @@ CREATE TABLE users (
     firstname VARCHAR(50) COMMENT 'Имя',
     lastname VARCHAR(50) COMMENT 'Фамилия',
     birthday DATE,
-    email VARCHAR(120) UNIQUE,
+    email VARCHAR(100) UNIQUE,
  	password_hash VARCHAR(100),
 	phone BIGINT UNSIGNED UNIQUE,
     created_at DATETIME DEFAULT NOW(),
@@ -41,7 +41,7 @@ CREATE TABLE customers (
 DROP TABLE IF EXISTS work_types;
 CREATE TABLE work_types(
 	id SERIAL,
-	name VARCHAR(150),
+	name VARCHAR(100),
 	
 	INDEX work_types_name_idx(name)
 );
@@ -49,6 +49,7 @@ CREATE TABLE work_types(
 DROP TABLE IF EXISTS executor_works;
 CREATE TABLE executor_works(
 	id SERIAL,
+	name VARCHAR(100),
 	user_id BIGINT UNSIGNED NOT NULL,
 	work_types_id BIGINT UNSIGNED NOT NULL,
   
@@ -92,6 +93,7 @@ CREATE TABLE mark (
 DROP TABLE IF EXISTS deals;
 CREATE TABLE deals (
 	id SERIAL,
+	name VARCHAR(100),
 	executor_id BIGINT UNSIGNED NOT NULL, --
 	customer_id BIGINT UNSIGNED NOT NULL, --
 	work_id BIGINT UNSIGNED NOT NULL, -- какая конкретно работа была выполнена
