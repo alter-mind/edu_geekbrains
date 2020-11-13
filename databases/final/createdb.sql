@@ -12,6 +12,7 @@ CREATE TABLE users (
  	password_hash VARCHAR(100),
 	phone BIGINT UNSIGNED UNIQUE,
     created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
 	
     INDEX users_firstname_lastname_idx(firstname, lastname)
 );
@@ -42,6 +43,8 @@ DROP TABLE IF EXISTS work_types;
 CREATE TABLE work_types(
 	id SERIAL,
 	name VARCHAR(100),
+	created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
 	
 	INDEX work_types_name_idx(name)
 );
@@ -52,9 +55,11 @@ CREATE TABLE executor_works(
 	name VARCHAR(100),
 	user_id BIGINT UNSIGNED NOT NULL,
 	work_types_id BIGINT UNSIGNED NOT NULL,
+	created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
   
 	PRIMARY KEY (user_id, work_types_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES customers(user_id),
     FOREIGN KEY (work_types_id) REFERENCES work_types(id)
 );
 
@@ -64,6 +69,9 @@ CREATE TABLE attachments (
 	user_id BIGINT UNSIGNED NOT NULL,
 	content TEXT, -- описание
 	filename VARCHAR(255), -- имя файла
+	created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+	
 	
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -104,6 +112,8 @@ CREATE TABLE deals (
 	customer_rating BIGINT UNSIGNED DEFAULT NULL, -- по желанию можно оценить заказчика
 	deal_rating BIGINT UNSIGNED DEFAULT NULL, -- по желанию можно оценить сделку.
 	media BIGINT UNSIGNED,
+	created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
 	
 	
 	FOREIGN KEY (executor_id) REFERENCES executors(id),
@@ -125,6 +135,8 @@ CREATE TABLE reviews (
 	rating BIGINT UNSIGNED NOT NULL,
 	content TEXT,
 	answer TEXT,
+	created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
 
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (author) REFERENCES users(id),
