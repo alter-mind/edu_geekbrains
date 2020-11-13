@@ -116,8 +116,8 @@ CREATE TABLE deals (
     updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
 	
 	
-	FOREIGN KEY (executor_id) REFERENCES executors(id),
-	FOREIGN KEY (customer_id) REFERENCES customers(id),
+	FOREIGN KEY (executor_id) REFERENCES executors(user_id),
+	FOREIGN KEY (customer_id) REFERENCES customers(user_id),
 	FOREIGN KEY (work_id) REFERENCES executor_works(id),
 	FOREIGN KEY (breaker) REFERENCES users(id),
 	FOREIGN KEY (executor_rating) REFERENCES mark(id),

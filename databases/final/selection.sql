@@ -1,3 +1,5 @@
+USE fin;
+
 -- Простой запрос показывает все (10) неоплаченные заказы
 	
 SELECT * FROM deals 
@@ -7,9 +9,9 @@ LIMIT 10
 ;
 
 
--- Простой запрос показывает количество заказов исполнителя id = 3
+-- Простой запрос показывает количество заказов исполнителя id = 105
 
-SELECT COUNT(*) AS 'deals' FROM deals WHERE executor_id = 3;
+SELECT COUNT(*) AS 'deals' FROM deals WHERE executor_id = 105;
 
 
 -- Запрос, показывающий все (10) заказы с оценкой отлично с сортировкой по цене
@@ -34,10 +36,10 @@ WHERE status = 'canceled';
 SELECT 
 	id, 
 	(SELECT CONCAT(users.firstname, ' ',users.lastname) FROM users WHERE users.id = user_id) as 'Name' ,
-	(SELECT AVG(price) FROM deals WHERE deals.executor_id = executors.id) AS 'AVG Price',
-	(SELECT SUM(price) FROM deals WHERE deals.executor_id = executors.id AND deals.status = 'awaiting payment') AS 'awaiting payments',
-	(SELECT SUM(price) FROM deals WHERE deals.executor_id = executors.id AND deals.status = 'closed') AS 'closed deals',
-	(SELECT AVG(deal_rating) FROM deals WHERE deals.executor_id = executors.id) AS 'rating'
+	(SELECT AVG(price) FROM deals WHERE deals.executor_id = executors.user_id) AS 'AVG Price',
+	(SELECT SUM(price) FROM deals WHERE deals.executor_id = executors.user_id AND deals.status = 'awaiting payment') AS 'awaiting payments',
+	(SELECT SUM(price) FROM deals WHERE deals.executor_id = executors.user_id AND deals.status = 'closed') AS 'closed deals',
+	(SELECT AVG(deal_rating) FROM deals WHERE deals.executor_id = executors.user_id) AS 'rating'
 FROM executors;
 
 
